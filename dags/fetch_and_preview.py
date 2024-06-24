@@ -27,7 +27,7 @@ def preview_data(**kwargs):
     if output_data:
         output_data = json.loads(output_data)  # Load the dict data to be JSON data
     else:
-        raise ValueError(f'No Data received from XCom')
+        raise ValueError('No Data received from XCom')
 
     # Create DataFrame from the JSON data
     df = pd.DataFrame(output_data)
