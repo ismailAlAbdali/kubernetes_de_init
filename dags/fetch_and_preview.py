@@ -6,7 +6,7 @@ import requests
 import json
 
 
-def get_data(**kwargs)
+def get_data(**kwargs):
     url = 'https://raw.githubusercontent.com/mrdbourke/zero-to-mastery-ml/master/data/car-sales-extended.csv'
      # Make,Colour,Odometer (KM),Doors,Price
     response = requests.get(url)
