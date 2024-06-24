@@ -22,7 +22,7 @@ def get_data(**kwargs):
 
 
 def preview_data(**kwargs):
-    output_data = kwargs['ti'].xcom_pull(key='data', task_ids='get_data')
+    output_data = kwargs['ti'].xcom_pull(key='data', task_ids='get_data_task')
 
     if output_data:
         output_data = json.loads(output_data)  # Load the dict data to be JSON data
@@ -33,7 +33,7 @@ def preview_data(**kwargs):
     df = pd.DataFrame(output_data)
 
     # Compute and aggregate based on Make and Color
-    df_uni_make_color = df.groupby(['Make', 'Color'], as_index=False, dropna=True).agg(
+    df_uni_make_color = df.groupby(['Make', 'Colour'], as_index=False).agg(
         {'Odometer (KM)': 'mean', 'Price': 'mean'})
 
     df_uni_make_color = df_uni_make_color.sort_values('Price', ascending=False)
@@ -50,7 +50,7 @@ default_args = {
 dag = DAG('fetch_and_review_car_data', default_args=default_args, schedule_interval=timedelta(days=1))
 
 data_data_py_operator = PythonOperator(
-    task_id='get_data',
+    task_id='get_data_task',
     python_callable=get_data,
     provide_context=True,
     dag=dag
